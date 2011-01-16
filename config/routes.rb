@@ -1,4 +1,8 @@
 Brandizzle::Application.routes.draw do
+
+  match '/about' => 'pages#show', :id => 'about'
+  match '/pages/:id' => 'pages#show'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
