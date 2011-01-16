@@ -1,0 +1,5 @@
+MetricFu::Configuration.run do |config|
+  #define which metrics you want to use
+  config.metrics  = [:churn, :flay, :flog, :reek, :roodi, :stats, :rails_best_practices, :hotspots]
+end
+
