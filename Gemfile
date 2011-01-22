@@ -44,6 +44,8 @@ group :development, :test do
 end
 
 group :test do
+  gem "bourne", "~>1.0"
   gem "shoulda", "~>2.11"
   gem 'cover_me', '>= 1.0.0.rc5'
+  gem 'factory_girl'
 end

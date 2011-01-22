@@ -1,4 +1,5 @@
 Brandizzle::Application.routes.draw do
+  resources :brands
 
   match '/about' => 'pages#show', :id => 'about'
   match '/pages/:id' => 'pages#show'

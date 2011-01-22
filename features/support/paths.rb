@@ -13,6 +13,10 @@ module NavigationHelpers
 
     when /the about page/
       "/about"
+
+    when /the dashboard/
+      brands_path
+
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #
