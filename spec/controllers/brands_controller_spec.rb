@@ -16,12 +16,8 @@ describe BrandsController do
       Brand.should have_received(:all)
     end
 
-    it 'should assign them for the view' do
-      should assign_to(:brands).with(brands)
-    end
+    it { should assign_to(:brands).with(brands) }
 
-    it 'should render the index template' do
-      should render_template(:index) 
-    end
+    it { should render_template(:index) }
   end
 end
