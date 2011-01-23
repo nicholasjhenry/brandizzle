@@ -3,9 +3,7 @@ require 'spec_helper'
 describe BrandsController do
 
   describe "#index" do
-    let (:brands) do
-      [Factory.build(:brand)]
-    end
+    let (:brands) { [Factory.build(:brand)] }
 
     before do
       Brand.stubs(:all).returns(brands)
