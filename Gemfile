@@ -32,14 +32,13 @@ gem 'haml-rails'
 group :development, :test do
   # gem 'autotest'
   # gem 'autotest-rails'
-  gem 'cucumber-rails', "0.3.2"
+  gem 'cucumber-rails', :git => 'git://github.com/aslakhellesoy/cucumber-rails.git' 
   gem 'cucumber', :git => 'git://github.com/aslakhellesoy/cucumber.git'
   gem "capybara", "~>0.4"
   gem "spork", :git => "git://github.com/chrismdp/spork.git"
   gem "database_cleaner", "~>0.6"
   gem "launchy"
-  gem 'rspec', "~>2.4"
-  gem 'rspec-rails', "~>2.4"
+  gem 'rspec-rails', "~>2.5"
   gem "fuubar"
 end
 
