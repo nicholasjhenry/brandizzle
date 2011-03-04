@@ -44,29 +44,36 @@ describe BrandsController do
     before do
       @brand = Factory.stub(:brand)
       Brand.stubs(:new).returns(@brand)
+      @brand.stubs(:save)
     end
 
-    context "valid attributes" do
+    context "any create" do
+      before { do_create }
+
+      it 'should create a new brand' do
+        Brand.should have_received(:new).with(brand_attributes)
+      end
+
+      it { should assign_to(:brand).with(@brand) }
+    end
+
+    context "when the brand saves successfully" do
       before do
         @brand.stubs(:save).returns(true)
         do_create
       end
 
-      it 'should create a new brand' do
-        @brand.should have_received(:save)
-      end
-
-      it { should assign_to(:brand).with(@brand) }
       it { should respond_with(:redirect) }
       it { should set_the_flash.to(/created/) }
       it { should redirect_to(edit_brand_url(@brand)) }
     end
 
-    context "with invalid attributes" do
+    context "when the brand fails to save" do
       before do
         @brand.stubs(:save).returns(false)
         do_create
       end
+
       it { should respond_with(:success) } 
       it { should render_template(:new) }
     end
