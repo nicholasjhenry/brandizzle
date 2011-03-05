@@ -2,8 +2,10 @@ require 'spec_helper'
 
 describe BrandsController do
 
+  let (:brand) { stub('brand') }
+  
   describe "#index" do
-    let (:brands) { [stub("brand")] }
+    let (:brands) { [brand] }
 
     before do
       Brand.stubs(:all).returns(brands)
@@ -19,8 +21,6 @@ describe BrandsController do
   end
 
   describe "#new" do
-    let (:brand) { stub("brand") }
-
     before do
       Brand.stubs(:new).returns(brand)
       get :new
@@ -35,13 +35,15 @@ describe BrandsController do
   end
 
   describe "#create" do
-    let (:brand) { stub("brand", :save => nil) }
     let (:brand_attributes) { {'name' => "Brand"} }
 
     before { Brand.stubs(:new).returns(brand) }
 
     context "with any create" do
-      before { do_create }
+      before do
+        brand.stubs(:save)
+        do_create
+      end
 
       it 'should create a new brand' do
         Brand.should have_received(:new).with(brand_attributes)
@@ -81,7 +83,6 @@ describe BrandsController do
   end
 
   describe "#edit" do
-    let(:brand) { stub("brand") }
 
     before do 
       Brand.stubs(:find).returns(brand)
