@@ -16,3 +16,13 @@ Feature: Manage Brands
     Then I should see "Brand successfully created"
     And I should see "BDDCasts"
   
+  @wip
+  Scenario: Update a brand
+    Given an existing brand "BDDCasts"
+    And I am on the dashboard
+    When I follow "BDDCasts"
+    And I fill in "Name" with "DDDCasts"
+    And I press "Update"
+    Then  I should see "Brand updated"
+    And I should see "DDDCasts"
+  

@@ -20,4 +20,14 @@ class BrandsController < ApplicationController
       render :new
     end
   end
+
+  def update
+    @brand = Brand.find(params[:id])
+    if @brand.update_attributes(params[:brand])
+      flash[:notice] = "Brand updated"
+      redirect_to edit_brand_url(@brand)
+    else
+      render :edit
+    end
+  end
 end

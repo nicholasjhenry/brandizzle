@@ -3,6 +3,7 @@ require 'spec_helper'
 describe BrandsController do
 
   let (:brand) { stub('brand') }
+  let (:brand_attributes) { {'name' => "Brand"} }
   
   describe "#index" do
     let (:brands) { [brand] }
@@ -35,8 +36,6 @@ describe BrandsController do
   end
 
   describe "#create" do
-    let (:brand_attributes) { {'name' => "Brand"} }
-
     before { Brand.stubs(:new).returns(brand) }
 
     context "with any create" do
@@ -99,6 +98,50 @@ describe BrandsController do
 
     def do_edit
       get :edit, :id => '1'
+    end
+  end
+
+  describe "#update" do
+    before do
+      Brand.stubs(:find).returns(brand)
+      brand.stubs(:update_attributes)
+    end
+
+    context "any update" do
+      before { do_update }
+
+      it "should find the brand" do
+        Brand.should have_received(:find).returns(brand)
+      end
+
+      it "should update the brand" do
+        brand.should have_received(:update_attributes).with(brand_attributes)
+      end
+    end
+
+    context "when the brand successfully updates" do
+      before do
+        brand.stubs(:update_attributes).returns(true)
+        do_update
+      end
+
+      it { should assign_to(:brand).with(brand) }
+      it { should redirect_to(edit_brand_url(brand)) }
+      it { should set_the_flash.to(/updated/) }
+    end
+
+    context "when the brand fails to update" do
+      before do
+        brand.stubs(:udpate_attributes).returns(false)
+        do_update
+      end
+
+      it { should respond_with(:success) }
+      it { should render_template(:edit) }
+    end
+
+    def do_update
+      put :update, :id => '1', :brand => brand_attributes 
     end
   end
 end
