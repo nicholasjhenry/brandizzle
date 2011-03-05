@@ -47,6 +47,10 @@ describe BrandsController do
         Brand.should have_received(:new).with(brand_attributes)
       end
 
+      it "should save a brand" do
+        brand.should have_received(:save)
+      end
+
       it { should assign_to(:brand).with(brand) }
     end
 
