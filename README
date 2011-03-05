@@ -4,4 +4,6 @@ More later...
 
 Notes:
 
-Mocking Framework: Borne
+* <tt>rake cover_me:report</tt> for test coverage
+* <tt>metrical</tt> to view code metics (gem install metrical)
+* Mocking Framework: Borne
