@@ -98,7 +98,7 @@ describe BrandsController do
     it { should render_template(:edit) }
 
     def do_edit
-      put :edit, :id => '1'
+      get :edit, :id => '1'
     end
   end
 end
