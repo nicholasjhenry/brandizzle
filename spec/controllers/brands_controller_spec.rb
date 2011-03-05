@@ -79,4 +79,25 @@ describe BrandsController do
       post :create, :brand => brand_attributes
     end
   end
+
+  describe "#edit" do
+    let(:brand) { stub("brand") }
+
+    before do 
+      Brand.stubs(:find).returns(brand)
+      do_edit
+    end
+
+    it "should find the brand" do
+      Brand.should have_received(:find).with('1')
+    end
+
+    it { should assign_to(:brand).with(brand) }
+    it { should respond_with(:success) }
+    it { should render_template(:edit) }
+
+    def do_edit
+      put :edit, :id => '1'
+    end
+  end
 end
