@@ -144,4 +144,27 @@ describe BrandsController do
       put :update, :id => '1', :brand => brand_attributes 
     end
   end
+
+  describe "#destroy" do
+    before do
+      Brand.stubs(:find).returns(brand)
+      brand.stubs(:destroy)
+      do_destroy
+    end
+
+    it "should find the brand" do
+      Brand.should have_received(:find).with(1)
+    end
+
+    it "should destroy the brand" do
+      brand.should have_received(:destroy)
+    end
+    
+    it { should redirect_to(brands_path) }
+    it { should set_the_flash.to(/deleted/) }
+
+    def do_destroy
+      delete :destroy, :id => 1 
+    end
+  end
 end

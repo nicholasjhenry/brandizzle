@@ -30,4 +30,11 @@ class BrandsController < ApplicationController
       render :edit
     end
   end
+
+  def destroy
+    @brand = Brand.find(params[:id]) 
+    @brand.destroy
+    flash[:notice] = "Brand deleted"
+    redirect_to brands_path
+  end
 end
