@@ -44,7 +44,7 @@ describe BrandsController do
         do_create
       end
 
-      it 'should create a new brand' do
+      it 'should build a new brand' do
         Brand.should have_received(:new).with(brand_attributes)
       end
 
