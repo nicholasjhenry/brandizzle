@@ -33,3 +33,14 @@ Feature: Manage Brands
     Then I should see "Brand deleted"
     And I should be on the dashboard
     And I should not see "BDDCasts"
+ 
+  @wip
+  Scenario: Add a search
+    Given an existing brand "BDDCasts" 
+    And I am on the dashboard
+    And I follow "BDDCasts" 
+    When I fill in "search_term" with "jschoolcraft"
+    And I press "Add term"
+    Then I should see "Search term added"
+    And I should see "jschoolcraft"
+ 

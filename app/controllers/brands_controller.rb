@@ -8,6 +8,7 @@ class BrandsController < ApplicationController
   end
 
   def edit
+    @search = Search.new
     @brand = Brand.find(params[:id])
   end
 

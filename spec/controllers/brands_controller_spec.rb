@@ -83,13 +83,20 @@ describe BrandsController do
 
   describe "#edit" do
 
+    let (:search) { stub('search') }
+
     before do 
       Brand.stubs(:find).returns(brand)
+      Search.stubs(:new).returns(search)
       do_edit
     end
 
     it "should find the brand" do
       Brand.should have_received(:find).with('1')
+    end
+
+    it "should build a new search" do
+      Search.should have_received(:new)
     end
 
     it { should assign_to(:brand).with(brand) }
