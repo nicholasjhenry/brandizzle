@@ -17,8 +17,7 @@ class BrandsController < ApplicationController
   def create
     @brand = Brand.new(params[:brand])
     if @brand.save
-      flash[:notice] = "Brand successfully created"
-      redirect_to edit_brand_url(@brand)
+      redirect_to edit_brand_url(@brand), :notice => "Brand successfully created"
     else
       render :new
     end
@@ -26,8 +25,7 @@ class BrandsController < ApplicationController
 
   def update
     if @brand.update_attributes(params[:brand])
-      flash[:notice] = "Brand updated"
-      redirect_to edit_brand_url(@brand)
+      redirect_to edit_brand_url(@brand), :notice => "Brand updated"
     else
       render :edit
     end
@@ -35,8 +33,7 @@ class BrandsController < ApplicationController
 
   def destroy
     @brand.destroy
-    flash[:notice] = "Brand deleted"
-    redirect_to brands_path
+    redirect_to brands_path, :notice => "Brand deleted"
   end
 
 private
