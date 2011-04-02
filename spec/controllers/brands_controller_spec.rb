@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe BrandsController do
 
-  let (:brand) { stub('brand') }
+  let (:brand) { stub('brand', :to_param => "1") }
   let (:brand_attributes) { {'name' => "Brand"} }
   
   describe "#index" do

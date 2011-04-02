@@ -4,7 +4,7 @@ describe SearchesController do
   
   let (:search) { stub("search") }
   let (:search_attributes) { {'term' => "jschool"} }
-  let (:brand) { stub("brand", :id => '1', :searches => stub("brand_search", :build => search)) }
+  let (:brand) { stub("brand", :id => '1', :to_param => '1', :searches => stub("brand_search", :build => search)) }
 
   describe "#create" do
     before do 
