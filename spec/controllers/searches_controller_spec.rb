@@ -59,4 +59,32 @@ describe SearchesController do
     end
   end
 
+  context "#destroy" do
+    before do 
+      Brand.stubs(:find).returns(brand)
+      brand.searches.stubs(:find).returns(search)
+      search.stubs(:destroy)
+      do_destroy
+    end
+
+    it 'should find the brand' do
+      Brand.should have_received(:find).with(1)
+    end
+
+    it 'should find the search' do
+      brand.searches.should have_received(:find).with(1)
+    end
+
+    it 'should destroy search' do
+      search.should have_received(:destroy)
+    end
+
+    it { should redirect_to(edit_brand_url(brand)) }
+    it { should set_the_flash.to(/deleted/) }
+
+    def do_destroy
+      delete :destroy, :brand_id => 1, :id => 1 
+    end
+  end
+
 end

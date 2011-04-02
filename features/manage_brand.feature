@@ -34,7 +34,6 @@ Feature: Manage Brands
     And I should be on the dashboard
     And I should not see "BDDCasts"
  
-  @wip
   Scenario: Add a search
     Given an existing brand "BDDCasts" 
     And I am on the dashboard
@@ -44,3 +43,11 @@ Feature: Manage Brands
     Then I should see "Search term added"
     And I should see "jschoolcraft"
  
+  Scenario: Delete a search
+    Given an existing brand "BDDCasts"
+    And there is a search "jschoolcraft" for "BDDCasts" 
+    And I am on the brand edit page for "BDDCasts"
+    When I delete search term for "jschoolcraft"
+    Then I should see "Search term deleted"
+    And I should not see "jschoolcraft"
+  

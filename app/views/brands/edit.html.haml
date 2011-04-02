@@ -12,9 +12,11 @@
 
     %hr
 
-    %ul
-    - @brand.searches.each do |search|
-      %li= search.term
+%ul#searches
+- @brand.searches.each do |search|
+  %li
+    = search.term
+    = button_to "Delete", brand_search_path(@brand, search), :method => :delete, :id => dom_id(search, :delete) 
 
 
 = form_for @brand do |f|
