@@ -1,4 +1,6 @@
 class BrandsController < ApplicationController
+  before_filter :assign_brand, :only => [:update, :destroy]
+
   def index
     @brands = Brand.all
   end
@@ -23,7 +25,6 @@ class BrandsController < ApplicationController
   end
 
   def update
-    @brand = Brand.find(params[:id])
     if @brand.update_attributes(params[:brand])
       flash[:notice] = "Brand updated"
       redirect_to edit_brand_url(@brand)
@@ -33,9 +34,14 @@ class BrandsController < ApplicationController
   end
 
   def destroy
-    @brand = Brand.find(params[:id]) 
     @brand.destroy
     flash[:notice] = "Brand deleted"
     redirect_to brands_path
+  end
+
+private
+  
+  def assign_brand
+    @brand = Brand.find(params[:id]) 
   end
 end
