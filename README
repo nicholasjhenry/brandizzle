@@ -9,6 +9,7 @@ TODO:
 
 Notes:
 
+* Generate RSpec documentation: <tt>rspec spec/ --format documentation</tt>
 * <tt>rake cover_me:all</tt> for test coverage. Note you cannot run test coverage with DRB (spork) as you will get no result in the report
 * <tt>metrical</tt> to view code metics (gem install metrical)
 * Mocking Framework: Borne
