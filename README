@@ -2,6 +2,11 @@
 
 More later...
 
+TODO:
+
+* Clean up cucumber tests based on http://railsrx.com/2011/03/30/cucumber-rails-0-4-the-de-web-step-ining
+* Use specify syntax for expectations
+
 Notes:
 
 * <tt>rake cover_me:all</tt> for test coverage. Note you cannot run test coverage with DRB (spork) as you will get no result in the report
