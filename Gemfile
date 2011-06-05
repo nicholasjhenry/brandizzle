@@ -25,6 +25,7 @@ gem 'sqlite3-ruby', :require => 'sqlite3'
 
 gem 'haml'
 gem 'haml-rails'
+gem 'twitter', '1.3.0' 
 
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators
@@ -32,8 +33,8 @@ gem 'haml-rails'
 group :development, :test do
   # gem 'autotest'
   # gem 'autotest-rails'
-  gem 'cucumber-rails', :git => 'git://github.com/aslakhellesoy/cucumber-rails.git' 
-  gem 'cucumber', :git => 'git://github.com/aslakhellesoy/cucumber.git'
+  gem 'cucumber-rails', :git => 'git://github.com/cucumber/cucumber-rails.git' 
+  gem 'cucumber', :git => 'git://github.com/cucumber/cucumber.git'
   gem "capybara", "~>0.4"
   gem "spork", :git => "git://github.com/chrismdp/spork.git"
   gem "database_cleaner", "~>0.6"
