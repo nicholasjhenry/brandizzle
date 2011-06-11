@@ -10,10 +10,10 @@ class Search < ActiveRecord::Base
         results = twitter_client.containing(search.term).language('en')
         results.each do |result|
           search.results.create(
-            created_at: result.created_at,
-            body: result.text,
-            source: "twitter",
-            url: "http://twitter.com/#{result.from_user}/statuses/#{result.id}")
+            :created_at => result.created_at,
+            :body       => result.text,
+            :source     => "twitter",
+            :url        => "http://twitter.com/#{result.from_user}/statuses/#{result.id}")
         end
       end
     end
