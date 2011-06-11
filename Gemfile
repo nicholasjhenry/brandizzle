@@ -42,6 +42,7 @@ group :development, :test do
   gem 'rspec-rails', "~>2.5"
   gem "fuubar"
   gem "interactive_editor"
+  gem "metrical"
 end
 
 group :test do
