@@ -41,6 +41,7 @@ group :development, :test do
   gem "launchy"
   gem 'rspec-rails', "~>2.5"
   gem "fuubar"
+  gem "interactive_editor"
 end
 
 group :test do
