@@ -1,5 +1,26 @@
 %h1 Brands
 
+.results
+  %table#results
+    %thead
+      %tr
+        %th Source
+        %th Message
+        %th Created
+        %th
+    %tbody
+      - if @results.try(:present?)
+        - @results.each do |result|
+          %tr
+            %td= link_to result.source, result.url
+            %td
+              %p= result.body
+            %td= result.created_at.to_s(:long)
+      - else
+        %tr
+          %td{:colspan => 3}
+            No results.
+
 %ul
 - @brands.each do |brand|
   %li= link_to brand.name, edit_brand_path(brand)

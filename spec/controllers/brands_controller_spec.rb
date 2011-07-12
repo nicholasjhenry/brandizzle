@@ -4,20 +4,27 @@ describe BrandsController do
 
   let (:brand) { stub('brand', :to_param => "1") }
   let (:brand_attributes) { {'name' => "Brand"} }
+  let (:results) { (1..10).map { stub('search_result') } }
   
   describe "#index" do
     let (:brands) { [brand] }
 
     before do
       Brand.stubs(:all).returns(brands)
+      SearchResult.stubs(:latest).returns(results)
       get :index 
     end
 
     it 'should find all the brands' do
       Brand.should have_received(:all)
     end
-
     it { should assign_to(:brands).with(brands) }
+
+    it 'should find lastest search results' do
+      SearchResult.should have_received(:latest)
+    end
+    it { should assign_to(:results).with(results) }
+
     it { should respond_with(:success) }
   end
 

@@ -3,6 +3,7 @@ class BrandsController < ApplicationController
 
   def index
     @brands = Brand.all
+    @results = SearchResult.latest
   end
 
   def new
