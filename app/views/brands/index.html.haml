@@ -21,6 +21,8 @@
           %td{:colspan => 3}
             No results.
 
+  = paginate @results
+
 %ul
 - @brands.each do |brand|
   %li= link_to brand.name, edit_brand_path(brand)

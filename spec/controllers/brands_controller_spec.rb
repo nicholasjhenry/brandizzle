@@ -11,7 +11,7 @@ describe BrandsController do
 
     before do
       Brand.stubs(:all).returns(brands)
-      SearchResult.stubs(:latest).returns(results)
+      SearchResult.stubs(:latest).returns(stub(:page => results))
       get :index 
     end
 

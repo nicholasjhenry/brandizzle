@@ -3,7 +3,7 @@ class BrandsController < ApplicationController
 
   def index
     @brands = Brand.all
-    @results = SearchResult.latest
+    @results = SearchResult.latest.page(params[:page])
   end
 
   def new
