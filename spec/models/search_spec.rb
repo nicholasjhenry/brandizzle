@@ -5,22 +5,15 @@ describe Search do
   it { should belong_to :brand }
   it { should have_many :results }
 
-  describe "#run_against_twitter" do
+  describe ".run_against_twitter" do
     let (:searches) do 
-      3.times.collect {|x| stub("search-#{x}", :term => "search-#{x}", :results => stub(:create => nil)) }
+      3.times.collect {|x| stub("search-#{x}", :run_against_twitter => nil) }
     end
-
-    let (:twitter_search_client) { stub() } 
-    let (:twitter_searches) { [] }
+    let (:twitter_client) { stub() } 
 
     before do 
-      searches.each do |search |
-        twitter_searches << stub("twitter search for #{search.term}", twitter_search_result(search.term)) 
-      end
-
-      twitter_search_client.stubs(:containing => twitter_search_client, :language => twitter_searches)
       Search.stubs(:all).returns(searches)
-      Search.run_against_twitter(twitter_search_client)
+      Search.run_against_twitter(twitter_client)
     end 
 
     it "should find all the searches" do
@@ -28,21 +21,40 @@ describe Search do
     end
 
     it "runs a twitter search for each search term" do
-      twitter_search_client.should have_received(:language).with('en').times(3)
-      searches.each_with_index do |search, idx|
-        twitter_search_client.should have_received(:containing).with(search.term)
+      searches.each do |search|
+        search.should have_received(:run_against_twitter).with(twitter_client)
       end
+    end
+  end
+
+  describe "#run_against_twitter" do
+    let (:twitter_client) { stub() } 
+    let (:twitter_searches) { [] }
+
+    before do
+      subject.stubs(:term => "test search term", :results => stub(:create => nil))
+      twitter_client.stubs(:containing => twitter_client, :language => twitter_searches)
+      3.times do |i|
+        twitter_searches << stub("twitter search for #{subject.term} #{i}", twitter_search_result([subject.term, i].join(" "))) 
+      end
+
+      subject.run_against_twitter(twitter_client)
+    end
+
+    it "runs a twitter search" do
+      twitter_client.should have_received(:language).with('en')
+      twitter_client.should have_received(:containing).with(subject.term)
     end
 
     it "creates a new search result for each twitter result" do
-      searches.each_with_index do |search, idx|
-        result = twitter_searches[idx]
-        search.results.should have_received(:create).with(has_entries({
+      twitter_searches.each do |result|
+        expected_create_params = {
           created_at: result.created_at,
           body: result.text,
           source: "twitter",
           url: "http://twitter.com/#{result.from_user}/statuses/#{result.id}" 
-        }))
+        }
+        subject.results.should have_received(:create).with(has_entries(expected_create_params))
       end
     end
 
