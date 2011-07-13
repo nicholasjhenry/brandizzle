@@ -6,6 +6,9 @@ describe Search do
   it { should have_many :results }
 
   describe ".run_against_twitter" do
+
+    subject { Search }
+
     let (:searches) do 
       3.times.collect {|x| stub("search-#{x}", :run_against_twitter => nil) }
     end
@@ -16,9 +19,7 @@ describe Search do
       Search.run_against_twitter(twitter_client)
     end 
 
-    it "should find all the searches" do
-      Search.should have_received(:all)
-    end
+    it { should have_received(:all) }
 
     it "runs a twitter search for each search term" do
       searches.each do |search|
