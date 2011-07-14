@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe Search do
+
   it { should validate_presence_of :term }
   it { should belong_to :brand }
   it { should have_many :results }
@@ -29,25 +30,29 @@ describe Search do
   end
 
   describe "#run_against_twitter" do
+
+    let (:search_term) { "test search term" }
     let (:twitter_client) { stub() } 
     let (:twitter_searches) { [] }
 
     before do
-      subject.stubs(:term => "test search term", :results => stub(:create => nil))
-      twitter_client.stubs(:containing => twitter_client, :language => twitter_searches)
+      subject.stubs(:term => search_term, :save_latest_id => nil, :results => stub(:create => nil), :update_attributes => nil)
+      twitter_client.stubs(:containing => twitter_client, :since_id => twitter_client, :language => twitter_searches)
       3.times do |i|
         twitter_searches << stub("twitter search for #{subject.term} #{i}", twitter_search_result([subject.term, i].join(" "))) 
       end
-
-      subject.run_against_twitter(twitter_client)
     end
 
-    it "runs a twitter search" do
-      twitter_client.should have_received(:language).with('en')
-      twitter_client.should have_received(:containing).with(subject.term)
+
+    it "updates the message id of the latest search" do
+      subject.run_against_twitter(twitter_client)
+
+      should have_received(:save_latest_id).with(twitter_searches)
     end
 
     it "creates a new search result for each twitter result" do
+      subject.run_against_twitter(twitter_client)
+
       twitter_searches.each do |result|
         expected_create_params = {
           created_at: result.created_at,
@@ -56,6 +61,29 @@ describe Search do
           url: "http://twitter.com/#{result.from_user}/statuses/#{result.id}" 
         }
         subject.results.should have_received(:create).with(has_entries(expected_create_params))
+      end
+    end
+
+    context "when first executed" do
+
+      it "runs a twitter search without specifying latest_id" do
+        subject.run_against_twitter(twitter_client)
+
+        twitter_client.should have_received(:language).with('en')
+        twitter_client.should have_received(:containing).with(search_term)
+      end
+    end
+
+    context "when executed again" do
+
+      it "runs a twitter search specifying latest_id" do
+        subject.stubs(:latest_id => '999')
+
+        subject.run_against_twitter(twitter_client)
+
+        twitter_client.should have_received(:language).with('en')
+        twitter_client.should have_received(:since_id).with('999')
+        twitter_client.should have_received(:containing).with(search_term)
       end
     end
 
@@ -76,6 +104,35 @@ describe Search do
         to_user_id: nil, 
         to_user_id_str: nil
       })
+    end
+  end
+
+  describe "#save_latest_id" do
+    
+    context "with results" do 
+
+      let(:results) do 
+        [ Hashie::Mash.new({:id => 3}), 
+          Hashie::Mash.new({:id => 6}), 
+          Hashie::Mash.new({:id => 2}) ]
+      end 
+
+      before do
+        subject.stubs(:update_attribute => nil)
+        subject.save_latest_id(results)
+      end
+
+      it { should have_received(:update_attribute).with(:latest_id, 6) }
+    end
+
+    context "without results" do 
+
+      before do
+        subject.stubs(:update_attribute => nil)
+        subject.save_latest_id([])
+      end
+
+      it { should_not have_received(:update_attribute) }
     end
   end
 end
