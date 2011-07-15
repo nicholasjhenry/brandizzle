@@ -37,18 +37,19 @@ module GoogleBlog
       private
 
       def create_results(response)
-        results = []
+        blog_posts = []
 
-        response["responseData"]["results"].each do |result|
-          results << BlogPost.new(
-                       :title        => result['titleNoFormatting'],
-                       :content      => result['content'],
-                       :url          => result['postUrl'],
-                       :published_at => result['publishedDate']
+        results = response["responseData"]["results"]
+        results.each do |result|
+          blog_posts << BlogPost.new(
+                         :title        => result['titleNoFormatting'],
+                         :content      => result['content'],
+                         :url          => result['postUrl'],
+                         :published_at => result['publishedDate']
           )
-        end
+        end if results.present?
 
-        return results
+        return blog_posts
       end
     end
   end
