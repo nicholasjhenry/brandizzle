@@ -28,6 +28,6 @@ end
 Given /^"([^"]*)" has (\d+) search results$/ do |search_term, number_of_results|
   search = Search.find_by_term(search_term)
   1.upto(number_of_results.to_i) do |index|
-    search.results.create!(:body => "Search result ##{index}", :created_at => index.hours.ago )
+    search.results.create!(:body => "Search result ##{index}", :url => "http://example#{index}", :created_at => index.hours.ago )
   end
 end
