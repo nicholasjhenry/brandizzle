@@ -6,6 +6,7 @@ gem 'haml'
 gem 'haml-rails'
 gem 'kaminari'
 gem 'sqlite3-ruby', :require => 'sqlite3'
+gem 'httparty'
 gem 'twitter', '1.3.0' 
 
 group :development, :test do
@@ -13,6 +14,7 @@ group :development, :test do
   gem 'cucumber', :git => 'git://github.com/cucumber/cucumber.git'
   gem 'cucumber-rails', :git => 'git://github.com/cucumber/cucumber-rails.git' 
   gem "database_cleaner", "~>0.6"
+  gem 'ruby-debug19'
   gem "fuubar"
   gem "interactive_editor"
   gem "launchy"

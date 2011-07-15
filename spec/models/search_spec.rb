@@ -6,18 +6,19 @@ describe Search do
   it { should belong_to :brand }
   it { should have_many :results }
 
-  describe ".run_against_twitter" do
+  describe ".run" do
 
     subject { Search }
 
     let (:searches) do 
-      3.times.collect {|x| stub("search-#{x}", :run_against_twitter => nil) }
+      3.times.collect {|x| stub("search-#{x}", :run_against_twitter => nil, :run_against_blog_search => nil) }
     end
     let (:twitter_client) { stub() } 
+    let (:blog_search_client) { stub() } 
 
     before do 
       Search.stubs(:all).returns(searches)
-      Search.run_against_twitter(twitter_client)
+      Search.run(twitter_client, blog_search_client)
     end 
 
     it { should have_received(:all) }
@@ -25,6 +26,12 @@ describe Search do
     it "runs a twitter search for each search term" do
       searches.each do |search|
         search.should have_received(:run_against_twitter).with(twitter_client)
+      end
+    end
+
+    it "runs a google blog search for each search term" do
+      searches.each do |search|
+        search.should have_received(:run_against_blog_search).with(blog_search_client)
       end
     end
   end
@@ -42,7 +49,6 @@ describe Search do
         twitter_searches << stub("twitter search for #{subject.term} #{i}", twitter_search_result([subject.term, i].join(" "))) 
       end
     end
-
 
     it "updates the message id of the latest search" do
       subject.run_against_twitter(twitter_client)
@@ -133,6 +139,47 @@ describe Search do
       end
 
       it { should_not have_received(:update_attribute) }
+    end
+  end
+
+  describe "#run_against_blog_search" do
+
+    let (:search_term) { "bdd casts" }
+
+    let (:search_results) do
+      3.times.collect do |i| 
+        stub("search result #{i}", 
+          :content      => "content #{i}",
+          :url          => "http://example#{i}.com",
+          :published_at => i.hours.ago
+        )
+      end
+    end
+
+    let (:blog_client) { stub("blog client", :fetch => search_results) }
+
+    before do
+      subject.stubs(:term => search_term, :results => stub(:create => nil))
+    end
+
+    it 'fetches results' do
+      subject.run_against_blog_search(blog_client)
+
+      blog_client.should have_received(:fetch).with(search_term)
+    end
+
+    it 'creates a new search result for each result' do
+      subject.run_against_blog_search(blog_client)
+
+      search_results.each do |sr|
+        expected_create_params = {
+          :body       => sr.content,
+          :url        => sr.url,
+          :source     => 'google',
+          :created_at => sr.published_at
+        }
+        subject.results.should have_received(:create).with(has_entries(expected_create_params))
+      end
     end
   end
 end

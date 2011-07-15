@@ -1,17 +1,22 @@
+require 'google_blog/search'
+
 class Search < ActiveRecord::Base
   belongs_to :brand
   validates_presence_of :term
   has_many :results, :class_name => "SearchResult"
 
   class << self
-    def run_against_twitter(twitter_client=Twitter::Search.new)
-      all.each { |search| search.run_against_twitter(twitter_client) }
+    def run(twitter_client=Twitter::Search.new, blog_search_client=GoogleBlog::Search)
+      all.each do |search| 
+        search.run_against_twitter(twitter_client) 
+        search.run_against_blog_search(blog_search_client)
+      end
     end
   end
 
   def run_against_twitter(twitter_client)
     search_results = fetch_twitter_search_results(twitter_client)
-    search_results.each { |result| create_result(result) }
+    search_results.each { |result| create_twitter_result(result) }
     save_latest_id(search_results)
   end
 
@@ -20,6 +25,18 @@ class Search < ActiveRecord::Base
 
     latest_id = results.sort_by(&:id).last.id
     update_attribute(:latest_id, latest_id)
+  end
+
+  def run_against_blog_search(blog_search_client=GoogleBlog::Search)
+    blog_posts = blog_search_client.fetch(term)
+    blog_posts.each do |bp|
+      results.create(
+        :created_at => bp.published_at,
+        :body       => bp.content,
+        :source     => "google",
+        :url        => bp.url 
+      )
+    end 
   end
 
   private
@@ -31,11 +48,12 @@ class Search < ActiveRecord::Base
       language('en')
   end 
 
-  def create_result(result)
+  def create_twitter_result(result)
     results.create(
       :created_at => result.created_at,
       :body       => result.text,
       :source     => "twitter",
-      :url        => "http://twitter.com/#{result.from_user}/statuses/#{result.id}")
+      :url        => "http://twitter.com/#{result.from_user}/statuses/#{result.id}"
+    )
   end
 end
