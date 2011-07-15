@@ -15,9 +15,9 @@ class Search < ActiveRecord::Base
   end
 
   def run_against_twitter(twitter_client)
-    search_results = fetch_twitter_search_results(twitter_client)
-    search_results.each { |result| create_twitter_result(result) }
-    save_latest_id(search_results)
+    twitter_results = fetch_twitter_search_results(twitter_client)
+    twitter_results.each { |result| create_twitter_result(result) }
+    save_latest_id(twitter_results)
   end
 
   def save_latest_id(results)
