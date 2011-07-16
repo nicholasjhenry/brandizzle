@@ -17,7 +17,7 @@ describe SearchResult do
     SearchResult.latest.should == [result_1, result_3, result_2]
   end
 
-  it "does not create duplicate entiries for the same URL" do
+  it "does not create duplicate entries for the same URL" do
     @search_result = Factory(:search_result)
     lambda {
       Factory.build(:search_result, :url => @search_result.url).save
