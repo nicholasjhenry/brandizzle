@@ -32,3 +32,17 @@ Feature: Dashboard
     When I follow "2"
     Then I should see "Search result #16"
     And I should not see "Search result #15"
+
+  Scenario: Fitler dashboard results by Brand
+    Given there is a search "foo" for "Bar"
+    And "bdd screencast" has the following search results:
+      | source  | body                                  | url                         | created_at        |
+      | twitter | Does anyone know any bdd screencasts? | http://twitter/statuses/123 | 09 Jul 2009 13:28 |
+    And "foo" has the following search results:
+      | source  | body                                       | url                         | created_at        |
+      | twitter | Isn't foo the awesomest variable name evar | http://twitter/statuses/456 | 09 Jul 2009 13:28 |
+    When I am on the dashboard
+    And I select "BDDCast" from "Brand"
+    And I press "Filter"
+    Then I should see "Does anyone know any bdd screencasts?"
+    And I should not see "Isn't foo the awesomest variable name evar"

@@ -11,21 +11,44 @@ describe BrandsController do
 
     before do
       Brand.stubs(:all).returns(brands)
-      SearchResult.stubs(:latest).returns(stub(:page => results))
-      get :index 
+      SearchResult.stubs(:latest => stub(:page => results), :latest_by_brand => stub(:page => results))
     end
 
-    it 'should find all the brands' do
-      Brand.should have_received(:all)
-    end
-    it { should assign_to(:brands).with(brands) }
+    shared_examples_for "any #index" do
 
-    it 'should find lastest search results' do
-      SearchResult.should have_received(:latest)
-    end
-    it { should assign_to(:results).with(results) }
+      it 'should find all the brands' do
+        Brand.should have_received(:all)
+      end
+      it { should assign_to(:brands).with(brands) }
+      it { should assign_to(:results).with(results) }
 
-    it { should respond_with(:success) }
+      it { should respond_with(:success) }
+    end
+
+    context "without filter" do
+
+      before do
+        get :index
+      end
+
+      it_behaves_like "any #index"
+
+      it 'should find latest search results' do
+        SearchResult.should have_received(:latest)
+      end
+    end
+
+    context "with filter" do
+      before do
+        get :index, :brand => "1"
+      end
+
+      it_behaves_like "any #index"
+
+      it 'should find latest search results' do
+        SearchResult.should have_received(:latest_by_brand).with("1")
+      end
+    end
   end
 
   describe "#new" do

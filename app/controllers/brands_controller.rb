@@ -3,7 +3,9 @@ class BrandsController < ApplicationController
 
   def index
     @brands = Brand.all
-    @results = SearchResult.latest.page(params[:page])
+    @results = params[:brand].present? ? SearchResult.latest_by_brand(params[:brand]) :
+                                         SearchResult.latest
+    @results = @results.page(params[:page])
   end
 
   def new
