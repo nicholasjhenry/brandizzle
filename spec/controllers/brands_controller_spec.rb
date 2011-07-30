@@ -11,7 +11,7 @@ describe BrandsController do
 
     before do
       Brand.stubs(:all).returns(brands)
-      SearchResult.stubs(:latest => stub(:page => results), :latest_by_brand => stub(:page => results))
+      SearchResult.stubs(:latest => stub(:page => results))
     end
 
     shared_examples_for "any #index" do
@@ -40,13 +40,13 @@ describe BrandsController do
 
     context "with filter" do
       before do
-        get :index, :brand => "1"
+        get :index, 'search'=> {'brand_id' => '1'}
       end
 
       it_behaves_like "any #index"
 
       it 'should find latest search results' do
-        SearchResult.should have_received(:latest_by_brand).with("1")
+        SearchResult.should have_received(:latest).with('brand_id' => '1')
       end
     end
   end

@@ -1,8 +1,8 @@
 %h1 Brands
 
 = form_tag  do
-  = label_tag :brand, "Brand"
-  = select_tag :brand, ('<option value="">--All--</option>'.html_safe + options_from_collection_for_select(Brand.all, :id, :name))
+  = label_tag :brand_id, "Brand"
+  = select_tag :brand_id, ('<option value="">--All--</option>'.html_safe + options_from_collection_for_select(Brand.all, :id, :name)), :name => 'search[brand_id]'
   = submit_tag "Filter"
 
 .results

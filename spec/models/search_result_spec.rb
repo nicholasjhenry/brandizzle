@@ -17,7 +17,7 @@ describe SearchResult do
     SearchResult.latest.should == [result_1, result_3, result_2]
   end
 
-  it "should find by brand" do
+  it "should find the lastest filtered brand" do
     brand_1 = Factory(:brand)
     search_1 = Factory.build(:search)
     brand_1.searches << search_1
@@ -30,17 +30,7 @@ describe SearchResult do
     result_2 = Factory.build(:search_result)
     search_2.results << result_2
 
-    SearchResult.by_brand(brand_2.id).should == [result_2]
-  end
-
-  it "should find the latest by brand" do
-    search_results = stub("search results", :by_brand => nil)
-    SearchResult.stubs(:latest).returns(search_results)
-
-    SearchResult.latest_by_brand(1)
-
-    SearchResult.should have_received(:latest)
-    search_results.should have_received(:by_brand).with(1)
+    SearchResult.latest(:brand_id => brand_2.id).should == [result_2]
   end
 
   it "does not create duplicate entries for the same URL" do
