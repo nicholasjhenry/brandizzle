@@ -46,3 +46,15 @@ Feature: Dashboard
     And I press "Filter"
     Then I should see "Does anyone know any bdd screencasts?"
     And I should not see "Isn't foo the awesomest variable name evar"
+
+  @wip
+  Scenario: Fitler dashboard results by Source
+    Given "bdd screencast" has the following search results:
+      | source  | body                                  | url                         | created_at        |
+      | twitter | Does anyone know any bdd screencasts? | http://twitter/statuses/123 | 09 Jul 2009 13:28 |
+      | blog    | This blog is the stuff                | http://blog/123             | 10 Jul 2009 13:28 |
+    And I am on the dashboard
+    When I select "twitter" from "Source"
+    And I press "Filter"
+    Then I should see "Does anyone know any bdd screencasts?"
+    And I should not see "This blog is the stuff"

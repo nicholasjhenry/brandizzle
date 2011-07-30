@@ -3,6 +3,8 @@
 = form_tag  do
   = label_tag :brand_id, "Brand"
   = select_tag :brand_id, ('<option value="">--All--</option>'.html_safe + options_from_collection_for_select(Brand.all, :id, :name)), :name => 'search[brand_id]'
+  = label_tag :source, "Source"
+  = select_tag :source, ('<option value="">--All--</option>'.html_safe + options_for_select(['twitter', 'blog'])), :name => 'search[source]'
   = submit_tag "Filter"
 
 .results

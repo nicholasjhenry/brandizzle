@@ -17,7 +17,7 @@ describe SearchResult do
     SearchResult.latest.should == [result_1, result_3, result_2]
   end
 
-  it "should find the lastest filtered brand" do
+  it "should find the lastest filtered by brand" do
     brand_1 = Factory(:brand)
     search_1 = Factory.build(:search)
     brand_1.searches << search_1
@@ -33,11 +33,17 @@ describe SearchResult do
     SearchResult.latest(:brand_id => brand_2.id).should == [result_2]
   end
 
+  it "should find the lastest filtered by source" do
+    result_1 = Factory(:search_result, :source => 'blog')
+    result_2 = Factory(:search_result, :source => 'twitter')
+
+    SearchResult.latest(:source => result_2.source).should == [result_2]
+  end
+
   it "does not create duplicate entries for the same URL" do
     @search_result = Factory(:search_result)
     lambda {
       Factory.build(:search_result, :url => @search_result.url).save
     }.should_not change(SearchResult, :count)
   end
-
 end

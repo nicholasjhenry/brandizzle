@@ -14,7 +14,10 @@ class SearchResult < ActiveRecord::Base
     # Converts the params to match the implement of MetaSearch. Coerces the params hash
     # into HasWithIndifferentAccess so there are no problems keys being strings or hashes
     def convert_to_search_params(params)
-      HashWithIndifferentAccess.new(params).rewrite(:brand_id => :search_brand_id_equals)
+      HashWithIndifferentAccess.new(params).rewrite(
+        :brand_id => :search_brand_id_equals,
+        :source   => :source_equals
+      )
     end
   end
 end
