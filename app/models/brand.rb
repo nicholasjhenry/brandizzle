@@ -6,5 +6,13 @@ class Brand < ActiveRecord::Base
     if search = Search.find_or_create_by_term(term)
       searches << search
     end
+    search
+  end
+  
+  def remove_search(search)
+    if searches.include?(search)
+      searches.delete(search)
+      search.destroy if search.brands.count == 0
+    end
   end
 end

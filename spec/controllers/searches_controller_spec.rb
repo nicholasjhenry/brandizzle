@@ -58,7 +58,7 @@ describe SearchesController do
     before do 
       Brand.stubs(:find).returns(brand)
       brand.searches.stubs(:find).returns(search)
-      search.stubs(:destroy)
+      brand.stubs(:remove_search)
       do_destroy
     end
 
@@ -70,8 +70,8 @@ describe SearchesController do
       brand.searches.should have_received(:find).with(1)
     end
 
-    it 'should destroy search' do
-      search.should have_received(:destroy)
+    it 'should remove search' do
+      brand.should have_received(:remove_search).with(search)
     end
 
     it { should redirect_to(edit_brand_url(brand)) }

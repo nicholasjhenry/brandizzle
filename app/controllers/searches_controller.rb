@@ -13,7 +13,8 @@ class SearchesController < ApplicationController
   def destroy
     brand  = Brand.find(params[:brand_id])
     search = brand.searches.find(params[:id])
-    search.destroy
+    brand.remove_search(search)
+
     redirect_to edit_brand_url(brand), :notice => "Search term deleted" 
   end
 end

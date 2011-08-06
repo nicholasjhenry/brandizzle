@@ -8,9 +8,12 @@ class CreateBrandsSearches < ActiveRecord::Migration
     add_index :brands_searches, :brand_id
     add_index :brands_searches, :search_id
     add_index :brands_searches, [:brand_id, :search_id]
+
+    remove_column :searches, :brand_id
   end
 
   def self.down
+    add_column :searches, :brand_id, :integer
     drop_table :brands_searches
   end
 end
