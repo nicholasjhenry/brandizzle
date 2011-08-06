@@ -4,7 +4,7 @@ describe SearchesController do
   
   let (:search) { stub("search") }
   let (:search_attributes) { {'term' => "jschool"} }
-  let (:brand) { stub("brand", :id => '1', :to_param => '1', :searches => stub("brand_search", :build => search)) }
+  let (:brand) { stub("brand", :id => '1', :to_param => '1', :searches => nil, :add_search => search) }
 
   describe "#create" do
     before do 
@@ -13,7 +13,6 @@ describe SearchesController do
 
     context "with any create" do
       before do
-        search.stubs(:save)
         do_create
       end
 
@@ -23,12 +22,8 @@ describe SearchesController do
       
       it { should assign_to(:brand).with(brand) }
     
-      it 'should build a new search for brand' do
-        brand.searches.should have_received(:build).with(search_attributes)
-      end
-
-      it "should save a search" do
-        search.should have_received(:save)
+      it 'should add a new search for brand' do
+        brand.should have_received(:add_search).with("jschool")
       end
 
       it { should assign_to(:search).with(search) }
@@ -38,7 +33,7 @@ describe SearchesController do
 
     context "when the search saves successfully" do
       before do
-        search.stubs(:save).returns(true)
+        brand.stubs(:add_search).returns(true)
         do_create
       end
 
@@ -47,7 +42,7 @@ describe SearchesController do
 
     context "when the search fails to save" do
       before do
-        search.stubs(:save).returns(false)
+        brand.stubs(:add_search).returns(false)
         do_create
       end
 

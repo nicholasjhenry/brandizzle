@@ -1,7 +1,7 @@
 require 'google_blog/search'
 
 class Search < ActiveRecord::Base
-  belongs_to :brand
+  has_and_belongs_to_many :brands
   validates_presence_of :term
   has_many :results, :class_name => "SearchResult"
 

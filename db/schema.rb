@@ -10,13 +10,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110715125027) do
+ActiveRecord::Schema.define(:version => 20110806124831) do
 
   create_table "brands", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "brands_searches", :id => false, :force => true do |t|
+    t.integer "brand_id"
+    t.integer "search_id"
+  end
+
+  add_index "brands_searches", ["brand_id", "search_id"], :name => "index_brands_searches_on_brand_id_and_search_id"
+  add_index "brands_searches", ["brand_id"], :name => "index_brands_searches_on_brand_id"
+  add_index "brands_searches", ["search_id"], :name => "index_brands_searches_on_search_id"
 
   create_table "search_results", :force => true do |t|
     t.integer  "search_id"

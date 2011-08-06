@@ -1,9 +1,7 @@
 class SearchesController < ApplicationController
   def create
     @brand  = Brand.find(params[:brand_id])
-    @search = @brand.searches.build(params[:search])
-
-    if @search.save
+    if @search = @brand.add_search(params[:search][:term])
       flash[:notice] = "Search term added"
     else
       flash[:error] = "Search term failed. Please provide a term"

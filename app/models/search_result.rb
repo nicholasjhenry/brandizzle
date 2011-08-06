@@ -15,7 +15,7 @@ class SearchResult < ActiveRecord::Base
     # into HasWithIndifferentAccess so there are no problems keys being strings or hashes
     def convert_to_search_params(params)
       HashWithIndifferentAccess.new(params).rewrite(
-        :brand_id => :search_brand_id_equals,
+        :brand_id => :search_brands_id_equals,
         :source   => :source_equals
       )
     end

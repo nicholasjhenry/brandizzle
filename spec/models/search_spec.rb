@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Search do
 
   it { should validate_presence_of :term }
-  it { should belong_to :brand }
+  it { should have_and_belong_to_many :brands }
   it { should have_many :results }
 
   describe ".run" do
