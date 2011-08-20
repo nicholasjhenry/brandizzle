@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.3'
+gem 'rails', '3.0.10'
 
 gem 'haml'
 gem 'haml-rails'
@@ -8,12 +8,11 @@ gem 'kaminari'
 gem 'meta_search'
 gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'httparty'
-gem 'twitter', '1.3.0' 
+gem 'twitter', '1.3.0'
 
 group :development, :test do
   gem "capybara", "~>0.4"
-  gem 'cucumber', :git => 'git://github.com/cucumber/cucumber.git'
-  gem 'cucumber-rails', :git => 'git://github.com/cucumber/cucumber-rails.git' 
+  gem 'cucumber-rails'
   gem "database_cleaner", "~>0.6"
   gem 'ruby-debug19'
   gem "fuubar"
