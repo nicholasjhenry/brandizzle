@@ -26,5 +26,5 @@ group :test do
   gem 'bourne', '~>1.0'
   gem 'cover_me'
   gem 'factory_girl'
-  gem 'shoulda', '~>2.11'
+  gem 'shoulda'
 end
