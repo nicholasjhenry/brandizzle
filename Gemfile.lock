@@ -1,9 +1,3 @@
-GIT
-  remote: git://github.com/timcharper/spork.git
-  revision: 25e842457bca30b935a5401547009bc358e7d703
-  specs:
-    spork (0.9.0.rc9)
-
 GEM
   remote: http://rubygems.org/
   specs:
@@ -244,6 +238,7 @@ GEM
     shoulda (2.11.3)
     simple_oauth (0.1.4)
     spoon (0.0.1)
+    spork (0.9.0.rc9)
     sqlite3-ruby (1.3.2)
     syntax (1.0.0)
     term-ansicolor (1.0.6)
@@ -286,6 +281,6 @@ DEPENDENCIES
   rspec-rails
   ruby-debug19
   shoulda
-  spork!
+  spork (~> 0.9.0.rc)
   sqlite3-ruby
   twitter (= 1.3.0)
