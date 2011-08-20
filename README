@@ -1,5 +1,11 @@
 == Brandizzle
 
+h1. About
+
+Brandizzle is a social brand monitoring application, based on the "BDDCasts Screencast Series":http://bddcasts.com/series/brandizzle. This application is built using Rails 3 and RSpec 2, where as the screencast uses Rails 2 and RSpec 1.
+
+Please note, this is an application used for practice and is not used in production. However, you may find it useful for as an example of an application developed usuing an "outside-in" approach.
+
 h1. Testing
 
 The test suite uses the following components:
