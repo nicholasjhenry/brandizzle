@@ -1,5 +1,5 @@
 Feature: Dashboard
-  In order to get a quick snapshot view of what is going on with by brand 
+  In order to get a quick snapshot view of what is going on with by brand
   I want to see search results in a dashboard
 
   Background:
@@ -47,7 +47,6 @@ Feature: Dashboard
     Then I should see "Does anyone know any bdd screencasts?"
     And I should not see "Isn't foo the awesomest variable name evar"
 
-  @wip
   Scenario: Fitler dashboard results by Source
     Given "bdd screencast" has the following search results:
       | source  | body                                  | url                         | created_at        |
