@@ -25,7 +25,13 @@ describe GoogleBlog::Search do
       end
     end
 
-    it "should return the number of blog posts contained in the response" do 
+    it "should escape the query" do
+      subject.fetch("Cucumber BDD RSpec")
+      google_api_url = "http://ajax.googleapis.com/ajax/services/search/blogs?v=1.0&q=Cucumber%20BDD%20RSpec&rsz=large&start=0"
+      should have_received(:get).with(google_api_url)
+    end
+
+    it "should return the number of blog posts contained in the response" do
       blog_posts = subject.fetch("BDD")
 
       blog_posts.size.should == google_api_results.size * 8
@@ -64,16 +70,16 @@ describe GoogleBlog::Search do
       blog_post.published_at.should == first_result["publishedDate"]
     end
   end
- 
+
   context "with no results" do
 
     before do
       subject.stubs(:get => {"responseData" => {"cursor" => {"pages" => {}}}})
     end
 
-    it do 
+    it do
       blog_posts = subject.fetch("BDD")
-      blog_posts.should be_empty 
+      blog_posts.should be_empty
     end
   end
 end

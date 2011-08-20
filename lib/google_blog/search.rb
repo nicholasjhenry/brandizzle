@@ -15,25 +15,25 @@ module GoogleBlog
     format :json
 
     PER_PAGE = 8
-    URL = "http://ajax.googleapis.com/ajax/services/search/blogs?v=1.0&q=%s&rsz=large&start=%s" 
+    URL = "http://ajax.googleapis.com/ajax/services/search/blogs?v=1.0&q=%s&rsz=large&start=%s"
 
     class << self
       def fetch(search_term)
         start = 0
-        response = get(URL % [search_term, start])
+        response = get(URL % [URI.escape(search_term), start])
         number_of_pages = response["responseData"]["cursor"]["pages"].size
         results = create_results(response)
         first_page_offset = 1
 
         first_page_offset.upto(number_of_pages - first_page_offset) do |i|
-          start = i * PER_PAGE 
+          start = i * PER_PAGE
           response = get(URL % [search_term, start])
           results = results + create_results(response)
         end
 
         return results
       end
-      
+
       private
 
       def create_results(response)
