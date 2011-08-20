@@ -1,8 +1,8 @@
 GIT
-  remote: git://github.com/chrismdp/spork.git
-  revision: 63761d5cb9e00817e9f1508d00784f22382aac32
+  remote: git://github.com/timcharper/spork.git
+  revision: 25e842457bca30b935a5401547009bc358e7d703
   specs:
-    spork (0.9.0.rc2)
+    spork (0.9.0.rc9)
 
 GEM
   remote: http://rubygems.org/

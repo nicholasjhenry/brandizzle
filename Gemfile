@@ -20,7 +20,7 @@ group :development, :test do
   gem "metrical"
   gem 'rspec-rails'
   gem 'sqlite3-ruby', :require => 'sqlite3'
-  gem "spork", :git => "git://github.com/chrismdp/spork.git"
+  gem "spork", :git => "git://github.com/timcharper/spork.git"
 end
 
 group :test do
