@@ -6,7 +6,6 @@ gem 'haml'
 gem 'haml-rails'
 gem 'kaminari'
 gem 'meta_search'
-gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'httparty'
 gem 'twitter', '1.3.0'
 
@@ -20,6 +19,7 @@ group :development, :test do
   gem "launchy"
   gem "metrical"
   gem 'rspec-rails'
+  gem 'sqlite3-ruby', :require => 'sqlite3'
   gem "spork", :git => "git://github.com/chrismdp/spork.git"
 end
 
