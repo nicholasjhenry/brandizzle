@@ -17,6 +17,8 @@ Brandizzle is setup with Spork to speed up the BDD cycle. To start the servers:
   bundle exec spork cucumber
 </pre>
 
+TODO: Add note about just running tests (i.e. not continuously)
+
 To run the tests in a continuously, execute:
 
 <pre>
