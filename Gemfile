@@ -19,7 +19,7 @@ group :development, :test do
   gem "interactive_editor"
   gem "launchy"
   gem "metrical"
-  gem 'rspec-rails', "~>2.5"
+  gem 'rspec-rails'
   gem "spork", :git => "git://github.com/chrismdp/spork.git"
 end
 

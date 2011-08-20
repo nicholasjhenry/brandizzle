@@ -208,7 +208,7 @@ GEM
       rspec-core (~> 2.5.0)
       rspec-expectations (~> 2.5.0)
       rspec-mocks (~> 2.5.0)
-    rspec-core (2.5.0)
+    rspec-core (2.5.2)
     rspec-expectations (2.5.0)
       diff-lcs (~> 1.1.2)
     rspec-instafail (0.1.5)
@@ -284,7 +284,7 @@ DEPENDENCIES
   meta_search
   metrical
   rails (= 3.0.10)
-  rspec-rails (~> 2.5)
+  rspec-rails
   ruby-debug19
   shoulda (~> 2.11)
   spork!
