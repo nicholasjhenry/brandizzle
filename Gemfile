@@ -2,7 +2,6 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.0.10'
 
-gem 'haml'
 gem 'haml-rails'
 gem 'kaminari'
 gem 'meta_search'

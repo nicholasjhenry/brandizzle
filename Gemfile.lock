@@ -108,7 +108,7 @@ GEM
       ruby-progressbar (~> 0.0.9)
     gherkin (2.4.13)
       json (>= 1.4.6)
-    haml (3.0.25)
+    haml (3.1.2)
     haml-rails (0.3.4)
       actionpack (~> 3.0)
       activesupport (~> 3.0)
@@ -275,7 +275,6 @@ DEPENDENCIES
   database_cleaner (~> 0.6)
   factory_girl
   fuubar
-  haml
   haml-rails
   httparty
   interactive_editor
