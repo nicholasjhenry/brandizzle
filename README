@@ -1,14 +1,44 @@
 == Brandizzle
 
-More later...
+h1. Testing
 
-TODO:
+The test suite uses the following components:
 
-* Clean up cucumber tests based on http://railsrx.com/2011/03/30/cucumber-rails-0-4-the-de-web-step-ining
+* RSpec
+* Cucumber
+* Spork
+* Borne
+* Factory Girl
 
-Notes:
+Brandizzle is setup with Spork to speed up the BDD cycle. To start the servers:
 
-* Generate RSpec documentation: <tt>rspec spec/ --format documentation</tt>
-* <tt>rake cover_me:all</tt> for test coverage. Note you cannot run test coverage with DRB (spork) as you will get no result in the report
-* <tt>metrical</tt> to view code metics (gem install metrical)
-* Mocking Framework: Borne
+<pre>
+  bundle exec spork
+  bundle exec spork cucumber
+</pre>
+
+To run the tests in a continuously, execute:
+
+<pre>
+  autotest -- --skip-bundler
+</pre>
+
+TODO: Add a standard method for cucumber. See https://github.com/guard/guard-cucumber
+
+To generate RSpec documentation:
+
+<pre>
+  rspec spec/ --format documentation
+</pre>
+
+To run code metrics:
+
+<pre>
+  metrical
+</pre>
+
+To run test coverage (exit Spork for RSpec and Cucumber while running as you will get no output):
+
+<pre>
+  rake cover_me:all
+</pre>
